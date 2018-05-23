@@ -1,0 +1,2 @@
+1. для того, чтобы в гриде отобразить вместо ID текстовую информацию, надо указывать колонку вот так:
+c.ForeignKey(b => b.GroupId, ViewBag.Groups as SelectList);

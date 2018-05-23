@@ -1,0 +1,782 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_news" Type="int" Nullable="false" />
+          <Property Name="Id_category" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" Nullable="false" />
+          <Property Name="Id_news" Type="int" Nullable="false" />
+          <Property Name="Id_comment_parent" Type="int" />
+          <Property Name="Date_add" Type="datetime" Nullable="false" />
+          <Property Name="Text" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Like_Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" Nullable="false" />
+          <Property Name="Id_comment" Type="int" Nullable="false" />
+          <Property Name="Value" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Like_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" Nullable="false" />
+          <Property Name="Id_news" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_add" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="ntext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_news" Type="int" Nullable="false" />
+          <Property Name="Id_tag" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_role" Type="int" Nullable="false" />
+          <Property Name="Date_reg" Type="datetime" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Category___Id_ca__71D1E811">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_News" Type="Self.Category_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_News">
+              <PropertyRef Name="Id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category___Id_ne__70DDC3D8">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_News" Type="Self.Category_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_comm__6B24EA82">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="Comment1" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment1">
+              <PropertyRef Name="Id_comment_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_news__6A30C649">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_user__693CA210">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_Comm__Id_co__01142BA1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_Comment" Type="Self.Like_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_Comment">
+              <PropertyRef Name="Id_comment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_Comm__Id_us__00200768">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Like_Comment" Type="Self.Like_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_Comment">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_News__Id_ne__7C4F7684">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_News" Type="Self.Like_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_News__Id_us__7B5B524B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_News" Type="Self.Like_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_News">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tag_News__Id_new__778AC167">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tag_News" Type="Self.Tag_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tag_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tag_News__Id_tag__787EE5A0">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tag_News" Type="Self.Tag_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tag_News">
+              <PropertyRef Name="Id_tag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__Id_role__628FA481">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DBModelContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category_News" EntityType="Self.Category_News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Like_Comment" EntityType="Self.Like_Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Like_News" EntityType="Self.Like_News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag_News" EntityType="Self.Tag_News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Category___Id_ca__71D1E811" Association="Self.FK__Category___Id_ca__71D1E811">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category_News" EntitySet="Category_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category___Id_ne__70DDC3D8" Association="Self.FK__Category___Id_ne__70DDC3D8">
+            <End Role="News" EntitySet="News" />
+            <End Role="Category_News" EntitySet="Category_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_comm__6B24EA82" Association="Self.FK__Comment__Id_comm__6B24EA82">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comment1" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_news__6A30C649" Association="Self.FK__Comment__Id_news__6A30C649">
+            <End Role="News" EntitySet="News" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_user__693CA210" Association="Self.FK__Comment__Id_user__693CA210">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_Comm__Id_co__01142BA1" Association="Self.FK__Like_Comm__Id_co__01142BA1">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Like_Comment" EntitySet="Like_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_Comm__Id_us__00200768" Association="Self.FK__Like_Comm__Id_us__00200768">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Like_Comment" EntitySet="Like_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_News__Id_ne__7C4F7684" Association="Self.FK__Like_News__Id_ne__7C4F7684">
+            <End Role="News" EntitySet="News" />
+            <End Role="Like_News" EntitySet="Like_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_News__Id_us__7B5B524B" Association="Self.FK__Like_News__Id_us__7B5B524B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Like_News" EntitySet="Like_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tag_News__Id_new__778AC167" Association="Self.FK__Tag_News__Id_new__778AC167">
+            <End Role="News" EntitySet="News" />
+            <End Role="Tag_News" EntitySet="Tag_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tag_News__Id_tag__787EE5A0" Association="Self.FK__Tag_News__Id_tag__787EE5A0">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Tag_News" EntitySet="Tag_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__Id_role__628FA481" Association="Self.FK__Users__Id_role__628FA481">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Category_News" Relationship="Self.FK__Category___Id_ca__71D1E811" FromRole="Category" ToRole="Category_News" />
+        </EntityType>
+        <EntityType Name="Category_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_news" Type="Int32" Nullable="false" />
+          <Property Name="Id_category" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Category___Id_ca__71D1E811" FromRole="Category_News" ToRole="Category" />
+          <NavigationProperty Name="News" Relationship="Self.FK__Category___Id_ne__70DDC3D8" FromRole="Category_News" ToRole="News" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_user" Type="Int32" Nullable="false" />
+          <Property Name="Id_news" Type="Int32" Nullable="false" />
+          <Property Name="Id_comment_parent" Type="Int32" />
+          <Property Name="Date_add" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comment1" Relationship="Self.FK__Comment__Id_comm__6B24EA82" FromRole="Comment" ToRole="Comment1" />
+          <NavigationProperty Name="Comment2" Relationship="Self.FK__Comment__Id_comm__6B24EA82" FromRole="Comment1" ToRole="Comment" />
+          <NavigationProperty Name="News" Relationship="Self.FK__Comment__Id_news__6A30C649" FromRole="Comment" ToRole="News" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Comment__Id_user__693CA210" FromRole="Comment" ToRole="Users" />
+          <NavigationProperty Name="Like_Comment" Relationship="Self.FK__Like_Comm__Id_co__01142BA1" FromRole="Comment" ToRole="Like_Comment" />
+        </EntityType>
+        <EntityType Name="Like_Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_user" Type="Int32" Nullable="false" />
+          <Property Name="Id_comment" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Like_Comm__Id_co__01142BA1" FromRole="Like_Comment" ToRole="Comment" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Like_Comm__Id_us__00200768" FromRole="Like_Comment" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Like_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_user" Type="Int32" Nullable="false" />
+          <Property Name="Id_news" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="News" Relationship="Self.FK__Like_News__Id_ne__7C4F7684" FromRole="Like_News" ToRole="News" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Like_News__Id_us__7B5B524B" FromRole="Like_News" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_add" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Category_News" Relationship="Self.FK__Category___Id_ne__70DDC3D8" FromRole="News" ToRole="Category_News" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__Id_news__6A30C649" FromRole="News" ToRole="Comment" />
+          <NavigationProperty Name="Like_News" Relationship="Self.FK__Like_News__Id_ne__7C4F7684" FromRole="News" ToRole="Like_News" />
+          <NavigationProperty Name="Tag_News" Relationship="Self.FK__Tag_News__Id_new__778AC167" FromRole="News" ToRole="Tag_News" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__Id_role__628FA481" FromRole="Role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tag_News" Relationship="Self.FK__Tag_News__Id_tag__787EE5A0" FromRole="Tag" ToRole="Tag_News" />
+        </EntityType>
+        <EntityType Name="Tag_News">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_news" Type="Int32" Nullable="false" />
+          <Property Name="Id_tag" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="News" Relationship="Self.FK__Tag_News__Id_new__778AC167" FromRole="Tag_News" ToRole="News" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK__Tag_News__Id_tag__787EE5A0" FromRole="Tag_News" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_role" Type="Int32" Nullable="false" />
+          <Property Name="Date_reg" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK__Comment__Id_user__693CA210" FromRole="Users" ToRole="Comment" />
+          <NavigationProperty Name="Like_Comment" Relationship="Self.FK__Like_Comm__Id_us__00200768" FromRole="Users" ToRole="Like_Comment" />
+          <NavigationProperty Name="Like_News" Relationship="Self.FK__Like_News__Id_us__7B5B524B" FromRole="Users" ToRole="Like_News" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Users__Id_role__628FA481" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Category___Id_ca__71D1E811">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_News" Type="Self.Category_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_News">
+              <PropertyRef Name="Id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category___Id_ne__70DDC3D8">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Category_News" Type="Self.Category_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_comm__6B24EA82">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="0..1" />
+          <End Role="Comment1" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment1">
+              <PropertyRef Name="Id_comment_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_news__6A30C649">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__Id_user__693CA210">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_Comm__Id_co__01142BA1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_Comment" Type="Self.Like_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_Comment">
+              <PropertyRef Name="Id_comment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_Comm__Id_us__00200768">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Like_Comment" Type="Self.Like_Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_Comment">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_News__Id_ne__7C4F7684">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_News" Type="Self.Like_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Like_News__Id_us__7B5B524B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Like_News" Type="Self.Like_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Like_News">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tag_News__Id_new__778AC167">
+          <End Role="News" Type="Self.News" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tag_News" Type="Self.Tag_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="News">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tag_News">
+              <PropertyRef Name="Id_news" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__Id_role__628FA481">
+          <End Role="Role" Type="Self.Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tag_News__Id_tag__787EE5A0">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tag_News" Type="Self.Tag_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tag_News">
+              <PropertyRef Name="Id_tag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Category_News" EntityType="Self.Category_News" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="Like_Comment" EntityType="Self.Like_Comment" />
+          <EntitySet Name="Like_News" EntityType="Self.Like_News" />
+          <EntitySet Name="News" EntityType="Self.News" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" />
+          <EntitySet Name="Tag_News" EntityType="Self.Tag_News" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK__Category___Id_ca__71D1E811" Association="Self.FK__Category___Id_ca__71D1E811">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Category_News" EntitySet="Category_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category___Id_ne__70DDC3D8" Association="Self.FK__Category___Id_ne__70DDC3D8">
+            <End Role="News" EntitySet="News" />
+            <End Role="Category_News" EntitySet="Category_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_comm__6B24EA82" Association="Self.FK__Comment__Id_comm__6B24EA82">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comment1" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_news__6A30C649" Association="Self.FK__Comment__Id_news__6A30C649">
+            <End Role="News" EntitySet="News" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__Id_user__693CA210" Association="Self.FK__Comment__Id_user__693CA210">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_Comm__Id_co__01142BA1" Association="Self.FK__Like_Comm__Id_co__01142BA1">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Like_Comment" EntitySet="Like_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_Comm__Id_us__00200768" Association="Self.FK__Like_Comm__Id_us__00200768">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Like_Comment" EntitySet="Like_Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_News__Id_ne__7C4F7684" Association="Self.FK__Like_News__Id_ne__7C4F7684">
+            <End Role="News" EntitySet="News" />
+            <End Role="Like_News" EntitySet="Like_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Like_News__Id_us__7B5B524B" Association="Self.FK__Like_News__Id_us__7B5B524B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Like_News" EntitySet="Like_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tag_News__Id_new__778AC167" Association="Self.FK__Tag_News__Id_new__778AC167">
+            <End Role="News" EntitySet="News" />
+            <End Role="Tag_News" EntitySet="Tag_News" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__Id_role__628FA481" Association="Self.FK__Users__Id_role__628FA481">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tag_News__Id_tag__787EE5A0" Association="Self.FK__Tag_News__Id_tag__787EE5A0">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="Tag_News" EntitySet="Tag_News" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category_News">
+            <EntityTypeMapping TypeName="DBModel.Category_News">
+              <MappingFragment StoreEntitySet="Category_News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_news" ColumnName="Id_news" />
+                <ScalarProperty Name="Id_category" ColumnName="Id_category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="DBModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Id_news" ColumnName="Id_news" />
+                <ScalarProperty Name="Id_comment_parent" ColumnName="Id_comment_parent" />
+                <ScalarProperty Name="Date_add" ColumnName="Date_add" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Like_Comment">
+            <EntityTypeMapping TypeName="DBModel.Like_Comment">
+              <MappingFragment StoreEntitySet="Like_Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Id_comment" ColumnName="Id_comment" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Like_News">
+            <EntityTypeMapping TypeName="DBModel.Like_News">
+              <MappingFragment StoreEntitySet="Like_News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Id_news" ColumnName="Id_news" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="DBModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date_add" ColumnName="Date_add" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag">
+            <EntityTypeMapping TypeName="DBModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tag_News">
+            <EntityTypeMapping TypeName="DBModel.Tag_News">
+              <MappingFragment StoreEntitySet="Tag_News">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_news" ColumnName="Id_news" />
+                <ScalarProperty Name="Id_tag" ColumnName="Id_tag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_role" ColumnName="Id_role" />
+                <ScalarProperty Name="Date_reg" ColumnName="Date_reg" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

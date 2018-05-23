@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46f06f12f42a459d90b8a1ecbe87537d" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Category" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Category_News" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Comment" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Like_Comment" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Like_News" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.News" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Role" Width="1.5" PointX="1.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tag" Width="1.5" PointX="0.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Tag_News" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Users" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <AssociationConnector Association="DBModel.FK__Category___Id_ca__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Category___Id_ne__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Comment__Id_comm__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Comment__Id_news__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Comment__Id_user__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Like_Comm__Id_co__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Like_Comm__Id_us__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Like_News__Id_ne__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Like_News__Id_us__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Tag_News__Id_new__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Users__Id_role__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK__Tag_News__Id_tag__787EE5A0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
